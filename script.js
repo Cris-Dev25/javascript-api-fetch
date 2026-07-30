@@ -22,7 +22,7 @@ function crearTarjeta(user) {
   return div;
 }
 
-function controlError(message) {
+function mostrarError(message) {
   const p = document.createElement("p");
   p.className = "text-red-500";
   p.textContent = message;
@@ -31,27 +31,35 @@ function controlError(message) {
 }
 
 async function cargarUsuarios() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  if (!response.ok) {
+    switch (response.status) {
+      case 404:
+        throw new Error("No encontramos los usuarios.");
+      case 500:
+        throw new Error("El servidor presentó un problema.");
+      default:
+        throw new Error("Ocurrió un error inesperado.");
+    }
+  }
+  return response.json();
+}
+
+function mostrarUsuarios(users) {
+  const fragment = document.createDocumentFragment();
+  for (const user of users) {
+    fragment.append(crearTarjeta(user));
+  }
+  usersContainer.append(fragment);
+}
+
+async function iniciarPagina() {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    if (!response.ok) {
-      switch (response.status) {
-        case 404:
-          throw new Error("No encontramos los usuarios.");
-        case 500:
-          throw new Error("El servidor presentó un problema.");
-        default:
-          throw new Error("Ocurrió un error inesperado.");
-      }
-    }
-    const users = await response.json();
-    const fragment = document.createDocumentFragment();
-    for (const user of users) {
-      fragment.append(crearTarjeta(user));
-    }
-    usersContainer.append(fragment);
+    const users = await cargarUsuarios();
+    mostrarUsuarios(users);
   } catch (error) {
-    controlError(error.message);
+    mostrarError(error.message);
   }
 }
 
-cargarUsuarios();
+iniciarPagina();
