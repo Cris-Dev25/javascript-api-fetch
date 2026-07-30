@@ -1,19 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fetch API users</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="bg-white p-10">
-    <head id="head">
-      <h1 class="text-3xl font-bold underline pb-3">Usuarios</h1>
-    </head>
-    <main id="main">
-      <div id="users" class="grid grid-cols-2 gap-4"></div>
-    </main>
-    <footer id="footer"></footer>
+  <body class="bg-slate-100 text-slate-900 min-h-screen">
+    <div class="max-w-6xl mx-auto p-6">
+      <header id="head" class="mb-6">
+        <h1 class="text-4xl font-extrabold tracking-tight">Usuarios</h1>
+        <p class="mt-2 text-slate-600">Lista de usuarios obtenida con Fetch API.</p>
+      </header>
+      <main id="main" class="space-y-6">
+        <section class="bg-white shadow-sm rounded-3xl p-6 border border-slate-200">
+          <div id="users" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          </div>
+        </section>
+      </main>
+      <footer id="footer" class="mt-6 text-sm text-slate-500">
+        <p>Cristian Pardo</p>
+      </footer>
+    </div>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
