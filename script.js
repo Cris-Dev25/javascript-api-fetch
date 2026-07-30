@@ -30,8 +30,9 @@ function controlError(message) {
   usersContainer.append(p);
 }
 
-fetch("https://jsonplaceholder.typicode.com/users")
-  .then((response) => {
+async function cargarUsuarios() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
     if (!response.ok) {
       switch (response.status) {
         case 404:
@@ -42,19 +43,15 @@ fetch("https://jsonplaceholder.typicode.com/users")
           throw new Error("Ocurrió un error inesperado.");
       }
     }
-    return response.json();
-  })
-  .then((users) => {
+    const users = await response.json();
     const fragment = document.createDocumentFragment();
     for (const user of users) {
       fragment.append(crearTarjeta(user));
     }
     usersContainer.append(fragment);
-  })
-  .catch((error) => {
+  } catch (error) {
     controlError(error.message);
-  });
+  }
+}
 
-
-  
-
+cargarUsuarios();
